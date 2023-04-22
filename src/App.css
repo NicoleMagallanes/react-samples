@@ -1,6 +1,7 @@
 .App {
-  text-align: left;
+  text-align: center;
   padding: 30px;
+  align-items: center;
 }
 
 .App-logo {
@@ -16,7 +17,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +45,7 @@
   max-width: 800px;
   margin: 0 auto;
   margin-top: 50px;
-  
+
 }
 
 .invoice-number,
@@ -91,4 +92,85 @@ tr:nth-child(odd) {
 
 tr:last-child {
   background-color: #ff505075;
+}
+
+.game {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-board button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  height: 80px;
+  width: 80px;
+  margin: 0px auto;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 10;
+  text-align: center;
+  width: 34px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.board-row:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: red;
+  color: rgb(0, 0, 0);
+}
+
+.moves-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px auto;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.moves {
+  font-size: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.moves li {
+  margin-bottom: 5px;
+}
+
+.current-move {
+  font-weight: bold;
 }

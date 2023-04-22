@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 
 function Invoice() {
     const invoice = {
@@ -63,7 +64,7 @@ function Invoice() {
             </div>
         );
     }
-    
+
     // Machine Problem 2
 
     //Calculate total amount
@@ -126,5 +127,5 @@ function Invoice() {
         </div>
     );
 
-    }
-    export default Invoice;
+}
+export default Invoice;

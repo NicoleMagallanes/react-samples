@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: left;
+  padding: 30px;
 }
 
 .App-logo {
@@ -32,7 +33,62 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.invoice-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 50px;
+  
+}
+
+.invoice-number,
+.date {
+  font-weight: bold;
+}
+
+.address {
+  margin-top: 30px;
+}
+
+.address p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.address1,
+.address2 {
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4e4e4e;
+  color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+tr:last-child {
+  background-color: #ff505075;
 }

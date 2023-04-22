@@ -108,6 +108,7 @@ function App1() {
     } else {
         status = `Next player: ${xIsNext ? 'X' : 'O'}`;
     }
+    
     const handleReset = () => {
         setHistory([{ squares: Array(9).fill(null) }]);
         setStepNumber(0);

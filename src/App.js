@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import Tictactoe from './Tictactoe';
-{/*import Invoice, { displayInvoiceDetails, displayInvoiceTable } from './invoice.js';
+import React from 'react';
+import Invoice from './invoice';
+
 function App() {
   return (
     <div className="App">
-     <Invoice/>
+      <Invoice />
     </div>
   );
 }
-*/}
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Tic Tac Toe Game</h1>
-      </header>
-      <Tictactoe/>
-    </div>
-  );
-}
+
 export default App;

@@ -1,131 +1,139 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function Invoice() {
     const invoice = {
-        invoiceTo: 'Juan Dela Cruz',
-        date: '2023-04-15',
-        address1: '810 Oroquieta Street Sta Cruz 1000',
-        address2: 'Manila, Metro Manila, Philippines',
-        invoiceNumber: '6845',
-        paymentMode: 'COD',
+        invoiceTo: "Juan Dela Cruz",
+        date: "2023-04-15",
+        address1: "810 Oroquieta Street Sta Cruz 1000",
+        address2: "Manila, Metro Manila, Philippines",
+        invoiceNumber: "6845",
+        paymentMode: "COD"
     };
 
-    const invoiceItems = [
-        { description: 'Mouse', Qty: 3, unitPrice: 200 },
-        { description: 'Keyboard', Qty: 3, unitPrice: 400 },
-        { description: 'Monitor', Qty: 6, unitPrice: 5400 },
-        { description: 'CPU Tower Case', Qty: 3, unitPrice: 1200 },
-        { description: 'Headset', Qty: 3, unitPrice: 500 },
-        { description: 'UPS', Qty: 1, unitPrice: 4000 },
-    ];
+    const [invoiceItems, setInvoiceItems] = useState([
+        { description: "Mouse", Qty: 3, unitPrice: 200 },
+        { description: "Keyboard", Qty: 3, unitPrice: 400 },
+        { description: "Monitor", Qty: 6, unitPrice: 5400 },
+        { description: "CPU Tower Case", Qty: 3, unitPrice: 1200 },
+        { description: "Headset", Qty: 3, unitPrice: 500 },
+        { description: "UPS", Qty: 1, unitPrice: 4000 },
+    ]);
 
-    // Machine Problem 1
+    //10 invoice number
+    const paddedInvoiceNumber = invoice.invoiceNumber.padStart(10, "0");
 
-    // 10 invoice number
-    const paddedInvoiceNumber = invoice.invoiceNumber.padStart(10, '0');
-
-    // Combine address1 and address2
+    //Combine address1 and address2
     const address = `${invoice.address1}, ${invoice.address2}`;
 
-    // Format date
+    //Format date
     const date = new Date(invoice.date);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
-    // Display invoice details
-    function displayInvoiceDetails() {
-        const paddedInvoiceNumber = invoice.invoiceNumber.toString().padStart(10, '0');
-        const formattedDate = new Date(invoice.date).toLocaleDateString('en-GB');
-        const address = `${invoice.address1}, ${invoice.address2}`;
-
+    const displayInvoiceDetails = () => {
         return (
-            <div className="invoice-container">
-                <div className="header">
-                    <h1>Invoice</h1>
-                </div>
-                <div id="invoice-details">
-                    <strong>
-                        <p>Invoice To: {invoice.invoiceTo}</p>
-                        <strong>
-                            <p>Invoice Number: {paddedInvoiceNumber}</p>
-                        </strong>
-                        <strong>
-                            <p>Date: {formattedDate}</p>
-                        </strong>
-                        <strong>
-                            <p>Address: {address}</p>
-                        </strong>
-                        <strong>
-                            <p>Payment Mode: {invoice.paymentMode}</p>
-                        </strong>
-                    </strong>
-                </div>
-                <div id="invoice-table"></div>
+            <div id='invoice-details'>
+                <strong>
+                    <p>Invoice To:</p>
+                </strong>
+                <p>{invoice.invoiceTo}</p>
+                <strong>
+                    <p>Invoice Number:</p>
+                </strong>
+                <p>{paddedInvoiceNumber}</p>
+                <strong>
+                    <p>Date:</p>
+                </strong>
+                <p>{formattedDate}</p>
+                <strong>
+                    <p>Address:</p>
+                </strong>
+                <p>{address}</p>
+                <strong>
+                    <p>Payment Mode:</p>
+                </strong>
+                <p>{invoice.paymentMode}</p>
             </div>
         );
-    }
+    };
 
-    // Machine Problem 2
+    const addInvoiceItem = () => {
+        setInvoiceItems([...invoiceItems, { description: "", Qty: 0, unitPrice: 0 }]);
+    };
 
-    //Calculate total amount
-    let totalAmount = 0;
-    let table = "";
-    for (let i = 0; i < invoiceItems.length; i++) {
-        let item = invoiceItems[i];
-        let amount = item.Qty * item.unitPrice;
-        totalAmount += amount;
-        table += `${item.description} | ${item.Qty} | ${item.unitPrice} | ${amount}\n`;
-    }
+    const removeInvoiceItem = (index) => {
+        const newInvoiceItems = [...invoiceItems];
+        newInvoiceItems.splice(index, 1);
+        setInvoiceItems(newInvoiceItems);
+    };
 
-    //Add total row to the table
-    table += `Total | | | ${totalAmount}`;
+    const updateInvoiceItem = (index, field, value) => {
+        const newInvoiceItems = [...invoiceItems];
+        newInvoiceItems[index][field] = value;
+        setInvoiceItems(newInvoiceItems);
+    };
 
-    //Display the table
-    function displayInvoiceTable() {
-        const invoiceTable = document.getElementById("invoice-table");
+    const displayInvoiceTable = () => {
         let tableHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Qty</th>
-          <th>Unit Price</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
         let totalAmount = 0;
-        invoiceItems.forEach((item) => {
+        invoiceItems.forEach((item, index) => {
             const amount = item.Qty * item.unitPrice;
             totalAmount += amount;
             tableHTML += `
-      <tr>
-        <td>${item.description}</td>
-        <td>${item.Qty}</td>
-        <td>${item.unitPrice}</td>
-        <td>${amount}</td>
-      </tr>
-    `;
+            <tr>
+            <td>${item.description}</td>
+            <td>${item.Qty}</td>
+            <td>${item.unitPrice}</td>
+            <td>${amount}</td>
+            <td><input type='text' id='description${index}' name='description${index}'/></td>
+            <td><input type='number' id='qty${index}' name='qty${index}'/></td>
+            <td><input type='number' id='unitPrice${index}' name='unitPrice${index}'/></td>
+            <td><input type='number' id='amount${index}' name='amount${index}' value='${amount}' readOnly/></td>
+          </tr>
+        `;
         });
-        tableHTML += `
-      <tr>
-        <td colspan="3" class="text-right">Total:</td>
-        <td>${totalAmount}</td>
-      </tr>
-    </tbody>
-  </table>
-  `;
 
-        invoiceTable.innerHTML = tableHTML;
-    }
+        tableHTML += `
+          <tr>
+            <td colspan='4' class='text-right'>Total:</td>
+            <td>${totalAmount}</td>
+          </tr>
+        </tbody>
+        </table>
+  `;
+        return <div id='invoice-table' dangerouslySetInnerHTML={{ __html: tableHTML }}></div>;
+    };
+
+    useEffect(() => {
+        displayInvoiceDetails();
+        displayInvoiceTable();
+    }, []);
 
     return (
-        <div>
-            <div>{displayInvoiceDetails()}</div>
-            <div>{displayInvoiceTable()}</div>
+        <div className='invoice-container'>
+            <div className='header'>
+                <h1>Invoice</h1>
+            </div>
+            <div id='add-invoice-item'>
+                {displayInvoiceDetails()}
+                {displayInvoiceTable()}
+                <button onClick={() => addInvoiceItem()}>Add Item</button>
+                <button onClick={() => removeInvoiceItem()}>Remove</button>
+            </div>
         </div>
     );
+};
 
-}
 export default Invoice;

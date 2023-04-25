@@ -58,8 +58,20 @@ function Invoice() {
     };
 
     const addInvoiceItem = () => {
-        setInvoiceItems([...invoiceItems, { description: "", Qty: 0, unitPrice: 0 }]);
-    };
+        setInvoiceItems([
+          ...invoiceItems, 
+          { 
+            description: "", 
+            Qty: 0, 
+            unitPrice: 0 
+          }
+        ]);
+        const itemIndex = invoiceItems.length; 
+        const itemDescriptionInput = document.getElementById(`description${itemIndex}`); 
+        if (itemDescriptionInput) {
+          itemDescriptionInput.focus();
+        }
+      };
 
     const removeInvoiceItem = (index) => {
         const newInvoiceItems = [...invoiceItems];
@@ -75,46 +87,60 @@ function Invoice() {
 
     const displayInvoiceTable = () => {
         let tableHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-
+          <table>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+    
         let totalAmount = 0;
         invoiceItems.forEach((item, index) => {
-            const amount = item.Qty * item.unitPrice;
-            totalAmount += amount;
-            tableHTML += `
-            <tr>
-            <td>${item.description}</td>
-            <td>${item.Qty}</td>
-            <td>${item.unitPrice}</td>
-            <td>${amount}</td>
-            <td><input type='text' id='description${index}' name='description${index}'/></td>
-            <td><input type='number' id='qty${index}' name='qty${index}'/></td>
-            <td><input type='number' id='unitPrice${index}' name='unitPrice${index}'/></td>
-            <td><input type='number' id='amount${index}' name='amount${index}' value='${amount}' readOnly/></td>
-          </tr>
-        `;
+          const amount = item.Qty * item.unitPrice;
+          totalAmount += amount;
+          tableHTML += `
+              <tr>
+                <td>
+                  <input type='text'
+                         id='description${index}' 
+                         name='description${index}' 
+                         value='${item.description}' 
+                         onChange={updateInvoiceItem}/>
+                </td>
+                <td>
+                  <input type='number'
+                         id='qty${index}' 
+                         name='qty${index}' 
+                         value='${item.Qty}' 
+                         onChange={updateInvoiceItem}/>
+                </td>
+                <td>
+                  <input type='number'
+                         id='unitPrice${index}' 
+                         name='unitPrice${index}' 
+                         value='${item.unitPrice}' 
+                         onChange={updateInvoiceItem}/>
+                </td>
+                <td>${amount}</td>
+                
+            `;
         });
-
+    
         tableHTML += `
-          <tr>
-            <td colspan='4' class='text-right'>Total:</td>
-            <td>${totalAmount}</td>
-          </tr>
-        </tbody>
-        </table>
-  `;
+              <tr>
+                <td colspan='3' class='text-right'>Total:</td>
+                <td>${totalAmount}</td>
+              </tr>
+            </tbody>
+          </table>
+        `;
         return <div id='invoice-table' dangerouslySetInnerHTML={{ __html: tableHTML }}></div>;
-    };
+      };
 
     useEffect(() => {
         displayInvoiceDetails();
